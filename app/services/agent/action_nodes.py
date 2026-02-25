@@ -14,7 +14,7 @@ class ActionNodes:
         if not state.used_methods:
             # Нет инструментов для вызова
             return {
-                "figures": [],
+                "artifacts": [],
                 "answer": "Анализ завершён, но визуализация не требовалась.",
             }
 
@@ -56,4 +56,5 @@ class ActionNodes:
             "artifacts": artifacts,
             "answer": updated_answer,
             "errors": errors,
+            "iteration": state.iteration + 1,
         }

@@ -94,6 +94,23 @@ class GeneratedArtifact(BaseModel):
     mime_type: str = Field(default="text/html", description="MIME тип для Telegram")
 
 
+class TelegramContext(BaseModel):
+    """
+    Контекст специфичный для Telegram-сессии.
+    Позволяет агенту общаться с пользователем, не смешивая логику визуализации с логикой мессенджера.
+    """
+
+    chat_id: int = Field(..., description="Уникальный ID чата в Telegram")
+    user_id: int = Field(..., description="Уникальный ID пользователя")
+    username: str = Field(None, description="Username пользователя для персонализации")
+    last_message_id: int = Field(
+        None, description="ID последнего сообщения для редактирования/удаления"
+    )
+    session_active: bool = Field(
+        default=True, description="Флаг активной сессии анализа"
+    )
+
+
 class AgentState(BaseModel):
     user_query: str = Field(..., description="Исходный запрос пользователя")
 
@@ -126,4 +143,8 @@ class AgentState(BaseModel):
 
     iteration: int = Field(
         0, ge=0, description="Текущая итерация цикла retrieval → rewrite"
+    )
+
+    telegram: TelegramContext = Field(
+        ..., description="Метаданные сессии Telegram для отправки ответов и файлов"
     )

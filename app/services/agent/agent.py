@@ -7,7 +7,7 @@ from app.services.agent.llm_nodes import GigaChatNodes
 from app.services.agent.route_nodes import RouteNodes
 
 
-def BuildAgent(
+def build_agent(
     llm_nodes: GigaChatNodes, action_nodes: ActionNodes, route_nodes: RouteNodes
 ):
 

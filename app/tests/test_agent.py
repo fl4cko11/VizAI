@@ -1,9 +1,9 @@
 from app.core.config import Settings
 from app.core.llm import get_gigachat
 from app.core.logging import get_logger
-from app.schemas.agent_state import AgentState
+from app.schemas.agent_state import AgentState, TelegramContext
 from app.services.agent.action_nodes import ActionNodes
-from app.services.agent.agent import BuildAgent
+from app.services.agent.agent import build_agent
 from app.services.agent.llm_nodes import GigaChatNodes
 from app.services.agent.route_nodes import RouteNodes
 from app.services.parse import generate_dataset_profile
@@ -19,9 +19,11 @@ llm_nodes = GigaChatNodes(llm, settings, logger)
 action_nodes = ActionNodes(settings, tools_map)
 route_nodes = RouteNodes(settings)
 
-agent = BuildAgent(llm_nodes, action_nodes, route_nodes)
+agent = build_agent(llm_nodes, action_nodes, route_nodes)
 
 dataset = generate_dataset_profile("app/tests/customer_survey.csv", "1")
+
+telegram_context = TelegramContext(chat_id=123, user_id=222, username="vasys")
 
 initial_state = AgentState(
     user_query="Проанализируй данные опроса клиентов и построй дашборд",
@@ -39,6 +41,7 @@ initial_state = AgentState(
     answer=None,
     errors=[],
     iteration=0,
+    telegram=telegram_context,
 )
 
 agent.invoke(initial_state)
