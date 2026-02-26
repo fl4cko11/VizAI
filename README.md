@@ -49,6 +49,6 @@ VizAI — это не просто бот, а полноценный агент 
 |--------|---------|
 | **Чат в Telegram с результатом** | `results/chat.png`<br>![Пример чата](https://github.com/fl4cko11/VizAI/blob/main/results/chat.png) |
 | **Интерактивный дашборд (Plotly)** | `results/dashboard_result.png`<br>![Дашборд](https://github.com/fl4cko11/VizAI/blob/main/results/dashboard_result.png) |
-| **Цепочка рассуждений в LangSmith** | `results/langsmith.png`<br>![LangSmith Trace](https://github.com/fl4cko11/VizAI/blob/main/langsmith.png) |
+| **Цепочка рассуждений в LangSmith** | `results/langsmith.png`<br>![LangSmith Trace](https://github.com/fl4cko11/VizAI/blob/main/results/langsmith.png) |
 
 > 🔍 *На скриншоте из LangSmith видно, как агент проходит цикл: `анализ → планирование → инструмент → наблюдение → коррекция`. Это подтверждает устойчивость к ошибкам и способность к адаптации.*
