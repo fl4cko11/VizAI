@@ -13,8 +13,26 @@ from sklearn.linear_model import (
     LinearRegression,
 )
 
+from app.schemas.tools_inputs import (
+    BoxPlotInput,
+    CorrelationDashboardInput,
+    DistributionComparisonDashboardInput,
+    HeatmapInput,
+    HistogramDashboardInput,
+    HistogramInput,
+    LineChartInput,
+    PieChartInput,
+    PieDashboardInput,
+    ScatterDashboardInput,
+    ScatterPlotInput,
+    TimeSeriesDashboardInput,
+)
 
-@tool(description="Создает интерактивную гистограмму с автоматической статистикой.")
+
+@tool(
+    args_schema=HistogramInput,
+    description="Создает интерактивную гистограмму с автоматической статистикой.",
+)
 def create_histogram_tool(
     file_path: str,
     column_name: str,
@@ -30,8 +48,8 @@ def create_histogram_tool(
     Args:
         file_path: путь до csv файла пользователя.
         column_name: Имя переменной для осей и легенды.
-        title: Заголовок графика. Если None, генерируется автоматически.
-        nbins: Количество бинов. Если None, Plotly выбирает оптимальное.
+        title: Заголовок графика.
+        nbins: Количество бинов.
         color: Цвет столбцов (hex или named color).
         show_stats: Если True, добавляет вертикальные линии среднего и медианы.
         encoding: Кодировка.
@@ -134,7 +152,10 @@ def create_histogram_tool(
     return fig
 
 
-@tool(description="Создает дашборд с сеткой гистограмм для множественных переменных.")
+@tool(
+    args_schema=HistogramDashboardInput,
+    description="Создает дашборд с сеткой гистограмм для множественных переменных.",
+)
 def create_histogram_dashboard_tool(
     file_path: str,
     column_names: list[str],
@@ -287,7 +308,8 @@ def create_histogram_dashboard_tool(
 
 
 @tool(
-    description="Создает оптимизированную круговую диаграмму с автоматической группировкой мелких категорий."
+    args_schema=PieChartInput,
+    description="Создает оптимизированную круговую диаграмму с автоматической группировкой мелких категорий.",
 )
 def create_pie_chart_tool(
     file_path: str,
@@ -434,7 +456,8 @@ def create_pie_chart_tool(
 
 
 @tool(
-    description="Создает дашборд с сеткой круговых диаграмм для сравнения распределения категории внутри групп. Внимание: Автоматически ограничивает количество групп для сохранения читаемости."
+    args_schema=PieDashboardInput,
+    description="Создает дашборд с сеткой круговых диаграмм для сравнения распределения категории внутри групп. Внимание: Автоматически ограничивает количество групп для сохранения читаемости.",
 )
 def create_pie_dashboard_tool(
     file_path: str,  # НОВЫЙ АРГУМЕНТ: путь к CSV
@@ -582,7 +605,8 @@ def create_pie_dashboard_tool(
 
 
 @tool(
-    description="Создает интерактивный линейный график с поддержкой временных рядов и сглаживания."
+    args_schema=LineChartInput,
+    description="Создает интерактивный линейный график с поддержкой временных рядов и сглаживания.",
 )
 def create_line_chart_tool(
     file_path: str,  # НОВЫЙ АРГУМЕНТ: путь к CSV
@@ -757,7 +781,8 @@ def create_line_chart_tool(
 
 
 @tool(
-    description="Создает двухпанельный дашборд: основной график + график изменений (ROC)."
+    args_schema=TimeSeriesDashboardInput,
+    description="Создает двухпанельный дашборд: основной график + график изменений (ROC).",
 )
 def create_time_series_dashboard_tool(
     file_path: str,
@@ -918,7 +943,8 @@ def create_time_series_dashboard_tool(
 
 
 @tool(
-    description="Создает многомерную диаграмму рассеяния (Scatter Plot) для анализа взаимосвязи между двумя числовыми переменными. Поддерживает кодирование дополнительных измерений через цвет (категории или градиент) и размер точек. Включает встроенные аналитические инструменты: линию тренда (OLS) с R² и контуры плотности для больших данных."
+    args_schema=ScatterPlotInput,
+    description="Создает многомерную диаграмму рассеяния (Scatter Plot) для анализа взаимосвязи между двумя числовыми переменными. Поддерживает кодирование дополнительных измерений через цвет (категории или градиент) и размер точек. Включает встроенные аналитические инструменты: линию тренда (OLS) с R² и контуры плотности для больших данных.",
 )
 def create_scatter_plot_tool(
     file_path: str,  # НОВЫЙ АРГУМЕНТ: путь к CSV
@@ -1188,7 +1214,8 @@ def create_scatter_plot_tool(
 
 
 @tool(
-    description="Создает комплексный дашборд: Scatter plot в центре + маргинальные гистограммы."
+    args_schema=ScatterDashboardInput,
+    description="Создает комплексный дашборд: Scatter plot в центре + маргинальные гистограммы.",
 )
 def create_scatter_dashboard_tool(
     file_path: str,  # НОВЫЙ АРГУМЕНТ: путь к CSV
@@ -1336,7 +1363,10 @@ def create_scatter_dashboard_tool(
     return fig
 
 
-@tool(description="Создает тепловую карту с опциональной иерархической кластеризацией.")
+@tool(
+    args_schema=HeatmapInput,
+    description="Создает тепловую карту с опциональной иерархической кластеризацией.",
+)
 def create_heatmap_tool(
     file_path: str,  # НОВЫЙ АРГУМЕНТ: путь к CSV
     numeric_cols: list[str],  # НОВЫЙ АРГУМЕНТ: список числовых колонок для матрицы
@@ -1460,7 +1490,10 @@ def create_heatmap_tool(
     return fig
 
 
-@tool(description="Комплексный дашборд для анализа корреляций.")
+@tool(
+    args_schema=CorrelationDashboardInput,
+    description="Комплексный дашборд для анализа корреляций.",
+)
 def create_correlation_dashboard_tool(
     file_path: str,  # НОВЫЙ АРГУМЕНТ: путь к CSV
     method: Literal["pearson", "spearman", "kendall"] = "pearson",
@@ -1615,7 +1648,8 @@ def create_correlation_dashboard_tool(
 
 
 @tool(
-    description="Создает статистический Box Plot для анализа распределения числовых данных и выявления выбросов. Визуализирует медиану, квартили (25%, 75%), межквартильный размах и аномальные значения. Поддерживает группировку по категориям для сравнения распределений между группами."
+    args_schema=BoxPlotInput,
+    description="Создает статистический Box Plot для анализа распределения числовых данных и выявления выбросов. Визуализирует медиану, квартили (25%, 75%), межквартильный размах и аномальные значения. Поддерживает группировку по категориям для сравнения распределений между группами.",
 )
 def create_box_plot_tool(
     file_path: str,
@@ -1798,7 +1832,8 @@ def create_box_plot_tool(
 
 
 @tool(
-    description="Комбинированный дашборд: Box Plot + Violin Plot + Таблица статистик."
+    args_schema=DistributionComparisonDashboardInput,
+    description="Комбинированный дашборд: Box Plot + Violin Plot + Таблица статистик.",
 )
 def create_distribution_comparison_dashboard(
     file_path: str,
